@@ -35,7 +35,11 @@ public class SecurityConfiguration {
         .disable()
         .authorizeHttpRequests()
         .requestMatchers(
-                "/api/v1/auth/**",
+//                "/api/hello/",
+
+                "/api/auth/**",
+                "/api/topic/**",
+                "api/topics",
                 "/v2/api-docs",
                 "/v3/api-docs",
                 "/v3/api-docs/**",

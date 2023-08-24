@@ -2,10 +2,7 @@ package com.n157.onlineforumchat.user;
 
 import com.n157.onlineforumchat.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,15 +19,19 @@ public class User implements UserDetails {
 
   @Id
   @GeneratedValue
-  private Integer id;
+  private Long id;
   private String firstname;
   private String lastname;
+  @Column(unique = true)
   private String email;
   private String password;
+  @Column(unique = true)
+  private String username;
 
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @ToString.Exclude
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
