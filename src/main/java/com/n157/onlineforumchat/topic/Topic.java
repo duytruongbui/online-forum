@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -19,13 +20,12 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "topic_id")
     private Long id;
-    @Column(name = "topic_name")
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = LAZY)
     private List<Post> posts;
+    private Instant createdDate;
     public Topic(String name) {
         this.name = name;
     }

@@ -1,46 +1,51 @@
 package com.n157.onlineforumchat.comment;
 
-import com.n157.onlineforumchat.exception.NotFoundException;
+import com.n157.onlineforumchat.auth.AuthenticationService;
+import com.n157.onlineforumchat.post.Post;
+import com.n157.onlineforumchat.post.PostRepository;
+import com.n157.onlineforumchat.post.exception.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 
+    private final PostRepository postRepository;
+    private final AuthenticationService authenticationService;
     private final CommentRepository commentRepository;
 
-    public List<Comment> getCommentsByPost(Long postId) {
-        return commentRepository.findByPostId(postId);
+    public void save(CommentDTO commentDTO) {
+        Post post = postRepository.findById(commentDTO.getPostId())
+                .orElseThrow(() -> new PostNotFoundException(commentDTO.getPostId().toString()));
+
+        Comment comment = Comment.builder()
+                .text(commentDTO.getText())
+                .createdAt(LocalDateTime.now())
+                .post(post)
+                .user(authenticationService.getCurrentUser())
+                .build();
+
+        commentRepository.save(comment);
     }
 
-    public Comment createComment(Comment comment) {
-        // You might want to associate the comment with the current user and post
-        return commentRepository.save(comment);
-    }
+    public List<CommentDTO> getAllCommentsForPost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId.toString()));
+        List<CommentDTO> commentDTOs = new ArrayList<>();
+        for (Comment comment : commentRepository.findByPost(post)) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setId(comment.getId());
+            commentDTO.setPostId(comment.getPost().getId());
+            commentDTO.setText(comment.getText());
+            commentDTO.setUserName(comment.getUser().getRealname());
 
-    public List<Comment> getAllComments() {
-        return commentRepository.findAll();
+            commentDTOs.add(commentDTO);
+        }
+        return commentDTOs;
     }
-
-    public Comment getCommentById(Long id) {
-        return commentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Comment not found with id: " + id));
-    }
-
-    public Comment updateComment(Long id, Comment updatedComment) {
-        Comment comment = getCommentById(id);
-        comment.setContent(updatedComment.getContent());
-        // Update other attributes as needed
-        return commentRepository.save(comment);
-    }
-
-    public void deleteComment(Long id) {
-        Comment comment = getCommentById(id);
-        commentRepository.delete(comment);
-    }
-
 
 }

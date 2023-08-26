@@ -1,5 +1,6 @@
 package com.n157.onlineforumchat.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.n157.onlineforumchat.topic.Topic;
 import com.n157.onlineforumchat.user.User;
 import jakarta.persistence.*;
@@ -27,10 +28,12 @@ public class Post {
     private String content;
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private Topic topic;

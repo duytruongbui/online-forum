@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -115,4 +117,17 @@ public class AuthenticationService {
             }
         }
     }
+
+    public User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails userDetails) {
+            String userEmail = userDetails.getUsername();
+            return repository.findByEmail(userEmail)
+                    .orElse(null);  // You might want to handle the case when the user is not found
+        }
+
+        return null;  // Return null if the user is not authenticated or principal is not UserDetails
+    }
+
 }

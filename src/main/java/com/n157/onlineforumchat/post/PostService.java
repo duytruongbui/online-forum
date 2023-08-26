@@ -29,29 +29,14 @@ public class PostService {
     private final TopicRepository topicRepository;
 
     public Post createPost(Post post) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new UserNotFoundException("User not found: " + userId));
-//
-//        Topic topic = topicRepository.findById(topicId)
-//                .orElseThrow(() -> new TopicNotFoundException("Topic not found: " + topicId));
-//
-//        post.setUser(user);
-//        post.setTopic(topic);
-//        post.setCreatedAt(LocalDateTime.now());
 
         return postRepository.save(post);
     }
 
-    public List<Post> getPostsByTopicId(Long topicId) {
-        Topic topic = topicRepository.findById(topicId).orElse(null);
-
-        if (topic != null) {
-            // Trigger lazy loading of posts within the same transaction
-            List<Post> posts = topic.getPosts(); // Lazy loading happens here
-            return posts;
-        } else {
-            return new ArrayList<>(); // or throw an exception, handle as needed
-        }
+    @Transactional(readOnly = true)
+    public Post getPost(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException(id.toString()));
     }
 
     @Transactional(readOnly = true)
@@ -79,7 +64,7 @@ public class PostService {
             postResponse.setId(post.getId());
             postResponse.setTitle(post.getTitle());
             postResponse.setContent(post.getContent());
-            postResponse.setUserName(post.getUser().getUsername());
+            postResponse.setUserName(post.getUser().getRealname());
             postResponse.setTopicName(post.getTopic().getName());
 
             postResponses.add(postResponse);

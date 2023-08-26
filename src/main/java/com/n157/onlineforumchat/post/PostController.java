@@ -23,14 +23,33 @@ public class PostController {
     private final PostService postService;
     private final UserRepository userRepository;
     private final TopicService topicService;
+    private final PostRepository postRepository;
 
-    @GetMapping("topic/{topic_id}") /* GET /: Get a list of posts in topic.*/
+    @GetMapping("topic/{topic_id}") /* GET /topic/{topic_id}: Get a list of posts in topic.*/
     public ResponseEntity<List<PostResponse>> getPostsByTopic(@PathVariable Long topic_id) {
         return ResponseEntity.ok().body(postService.getPostsByTopic(topic_id));
     }
 
-    @GetMapping("/posts") /* GET /: Get a list of posts by username(email).*/
+    @GetMapping("/post/{id}")
+    public ResponseEntity<Post> getPost(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPost(id));
+    }
+
+    @GetMapping("/posts") /* GET /posts?username=...: Get a list of posts by username.*/
     public ResponseEntity<List<PostResponse>> getPostsByUsername(@RequestParam String username) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedUserEmail  = authentication.getName();
+
+        Optional<User> userOptional = userRepository.findByEmail(authenticatedUserEmail);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        User user = userOptional.get();
+        if (!user.getRealname().equals(username)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return status(HttpStatus.OK).body(postService.getPostsByUsername(username));
     }
 
@@ -62,45 +81,44 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Post created successfully");
     }
 
-//    @PutMapping("/{post_id}") /* PUT /:post_id: Update a post (for authorized users). */
-//    public ResponseEntity<String> updatePost(@PathVariable("post_id") Long postId,
-//                                             @RequestBody PostDTO postDTO) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        if (authentication == null || !authentication.isAuthenticated()) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
-//        }
-//
-//        String userName = authentication.getName();
-//        Optional<User> userOptional = userRepository.findByUsername(userName);
-//
-//        if (userOptional.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//        }
-//
-//        User user = userOptional.get();
-//
-//        Optional<Post> postOptional = postRepository.findById(postId);
-//
-//        if (postOptional.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found");
-//        }
-//
-//        Post existingPost = postOptional.get();
-//
-//        if (!existingPost.getUser().equals(user)) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to update this post");
-//        }
-//
-//        // Perform further validation on postDTO, e.g., checking for valid content, etc.
-//        // ...
-//
-//        // Update the post
-//        existingPost.setContent(postDTO.getContent());
-//        postRepository.save(existingPost);
-//
-//        return ResponseEntity.ok("Post updated successfully");
-//    }
+    @PutMapping("/update-post/{post_id}") /* PUT /:post_id: Update a post (for authorized users). */
+    public ResponseEntity<String> updatePost(@PathVariable("post_id") Long postId,
+                                             @RequestBody PostResponse postResponse) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+
+        String userMail = authentication.getName();
+        Optional<User> userOptional = userRepository.findByEmail(userMail);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        User user = userOptional.get();
+
+        Post post = postService.getPost(postId);
+
+        if (!post.getUser().equals(user)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to update this post");
+        }
+
+        // Update title if present in postResponse
+        if (postResponse.getTitle() != null && !postResponse.getTitle().isEmpty()) {
+            post.setTitle(postResponse.getTitle());
+        }
+
+        // Update content if present in postResponse
+        if (postResponse.getContent() != null && !postResponse.getContent().isEmpty()) {
+            post.setContent(postResponse.getContent());
+        }
+
+        postService.createPost(post);
+
+        return ResponseEntity.ok("Post updated successfully");
+    }
 
 
     /* DELETE /:post_id: Delete a post (for authorized users).*/
