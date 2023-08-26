@@ -1,4 +1,4 @@
-package com.n157.onlineforumchat.demo;
+package com.n157.onlineforumchat;
 
 import com.n157.onlineforumchat.auth.AuthenticationRequest;
 import com.n157.onlineforumchat.auth.AuthenticationService;
@@ -24,22 +24,22 @@ public class DemoController {
     private final UserRepository userRepository;
     private final PostService postService;
 
-    @GetMapping
-    public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Hello from secured endpoint");
-    }
-
-    @GetMapping("topics/{topic_id}")
-    public ResponseEntity<List<PostResponse>> getPostsByTopic(@PathVariable Long topic_id) {
-        return ResponseEntity.ok().body(postService.getPostsByTopic(topic_id));
-    }
-
-
-    @PostMapping
-    public ResponseEntity<String> login(@RequestBody AuthenticationRequest request) {
-        Optional<User> user = userRepository.findByEmail(request.getEmail());
-        return ResponseEntity.ok(request.getEmail());
-    }
+//    @GetMapping
+//    public ResponseEntity<String> sayHello() {
+//        return ResponseEntity.ok("Hello from secured endpoint");
+//    }
+//
+//    @GetMapping("topics/{topic_id}")
+//    public ResponseEntity<List<PostResponse>> getPostsByTopic(@PathVariable Long topic_id) {
+//        return ResponseEntity.ok().body(postService.getPostsByTopic(topic_id));
+//    }
+//
+//
+//    @PostMapping
+//    public ResponseEntity<String> login(@RequestBody AuthenticationRequest request) {
+//        Optional<User> user = userRepository.findByEmail(request.getEmail());
+//        return ResponseEntity.ok(request.getEmail());
+//    }
 
 
 }
