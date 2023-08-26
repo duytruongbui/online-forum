@@ -51,32 +51,32 @@ public class OnlineForumChatApplication {
 //                    .username("duytruong")
 //                    .build();
 
-            var admin1 = RegisterRequest.builder()
-                    .firstname("a")
-                    .lastname("b")
-                    .email("a@abc.com")
-                    .password("123456")
-                    .username("abc")
-                    .build();
-            System.out.println("Admin token: " + service.register(admin1).getAccessToken());
+//            var admin1 = RegisterRequest.builder()
+//                    .firstname("a")
+//                    .lastname("b")
+//                    .email("a@abc.com")
+//                    .password("123456")
+//                    .username("abc")
+//                    .build();
+//            System.out.println("Admin token: " + service.register(admin1).getAccessToken());
 
-            var post1 = Post.builder()
-                    .title("title1")
-                    .content("content1")
-                    .topic(topicService.getTopicById(1L))
-                    .user(userService.getUserByUsername("abc"))
-                    .createdAt(LocalDateTime.now())
-                    .build();
+//            var post1 = Post.builder()
+//                    .title("title1")
+//                    .content("content1")
+//                    .topic(topicService.getTopicById(1L))
+//                    .user(userService.getUserByUsername("abc"))
+//                    .createdAt(LocalDateTime.now())
+//                    .build();
 
-            var post2 = Post.builder()
-                    .title("title2")
-                    .content("content2")
-                    .topic(topicService.getTopicById(1L))
-                    .user(userService.getUserByUsername("abc"))
-                    .createdAt(LocalDateTime.now())
-                    .build();
-            postService.createPost(post1);
-            postService.createPost(post2);
+//            var post2 = Post.builder()
+//                    .title("title2")
+//                    .content("content2")
+//                    .topic(topicService.getTopicById(1L))
+//                    .user(userService.getUserByUsername("abc"))
+//                    .createdAt(LocalDateTime.now())
+//                    .build();
+//            postService.createPost(post1);
+//            postService.createPost(post2);
         };
     }
 }
