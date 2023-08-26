@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                 "api/bot/chat",
                 "/api/topic/**",
                 "api/topics",
-
+                "api/comments",
                 "/v2/api-docs",
                 "/v3/api-docs",
                 "/v3/api-docs/**",
