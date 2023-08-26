@@ -23,9 +23,9 @@ public class Topic {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = LAZY)
-    private List<Post> posts;
-    private Instant createdDate;
+//    @OneToMany(fetch = LAZY)
+//    private List<Post> posts;
+//    private Instant createdDate;
     public Topic(String name) {
         this.name = name;
     }
