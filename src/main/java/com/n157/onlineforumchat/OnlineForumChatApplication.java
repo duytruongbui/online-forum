@@ -24,24 +24,24 @@ public class OnlineForumChatApplication {
         SpringApplication.run(OnlineForumChatApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner seedTopics(TopicService topicService,
-                                        AuthenticationService service,
-                                        PostService postService,
-                                        UserService userService) {
-        return args -> {
-            List<Topic> topics = new ArrayList<>();
-            topics.add(new Topic("Thời sự"));
-            topics.add(new Topic("Kinh doanh"));
-            topics.add(new Topic("Khoa học"));
-            topics.add(new Topic("Giải trí"));
-            topics.add(new Topic("Thể thao"));
-            topics.add(new Topic("Pháp luật"));
-            topics.add(new Topic("Giáo dục"));
-            topics.add(new Topic("Sức khỏe"));
-            topics.add(new Topic("Đời sống"));
-            topics.add(new Topic("Tâm sự"));
-            topicService.createTopics(topics);
+//    @Bean
+//    public CommandLineRunner seedTopics(TopicService topicService,
+//                                        AuthenticationService service,
+//                                        PostService postService,
+//                                        UserService userService) {
+//        return args -> {
+//            List<Topic> topics = new ArrayList<>();
+//            topics.add(new Topic("Thời sự"));
+//            topics.add(new Topic("Kinh doanh"));
+//            topics.add(new Topic("Khoa học"));
+//            topics.add(new Topic("Giải trí"));
+//            topics.add(new Topic("Thể thao"));
+//            topics.add(new Topic("Pháp luật"));
+//            topics.add(new Topic("Giáo dục"));
+//            topics.add(new Topic("Sức khỏe"));
+//            topics.add(new Topic("Đời sống"));
+//            topics.add(new Topic("Tâm sự"));
+//            topicService.createTopics(topics);
 
 //            var admin = RegisterRequest.builder()
 //                    .firstname("duy")
@@ -77,6 +77,6 @@ public class OnlineForumChatApplication {
 //                    .build();
 //            postService.createPost(post1);
 //            postService.createPost(post2);
-        };
-    }
+//        };
+//    }
 }
