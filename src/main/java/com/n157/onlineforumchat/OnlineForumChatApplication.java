@@ -24,25 +24,25 @@ public class OnlineForumChatApplication {
         SpringApplication.run(OnlineForumChatApplication.class, args);
     }
 
-//    @Bean
-//    public CommandLineRunner seedTopics(TopicService topicService,
-//                                        AuthenticationService service,
-//                                        PostService postService,
-//                                        UserService userService) {
-//        return args -> {
+    @Bean
+    public CommandLineRunner seedTopics(TopicService topicService,
+                                        AuthenticationService service,
+                                        PostService postService,
+                                        UserService userService) {
+        return args -> {
 //            List<Topic> topics = new ArrayList<>();
-//            topics.add(new Topic("Thời sự"));
-//            topics.add(new Topic("Kinh doanh"));
+//            topics.add(new Topic("Công nghệ"));
+//            topics.add(new Topic("Kinh doanh và khởi nghiệp"));
+//            topics.add(new Topic("Phát triển bản thân"));
 //            topics.add(new Topic("Khoa học"));
-//            topics.add(new Topic("Giải trí"));
-//            topics.add(new Topic("Thể thao"));
-//            topics.add(new Topic("Pháp luật"));
+//            topics.add(new Topic("Sức khỏe và Y học"));
 //            topics.add(new Topic("Giáo dục"));
-//            topics.add(new Topic("Sức khỏe"));
-//            topics.add(new Topic("Đời sống"));
-//            topics.add(new Topic("Tâm sự"));
+//            topics.add(new Topic("Du lịch"));
+//            topics.add(new Topic("Sự kiện và Xã hội"));
+//            topics.add(new Topic("Trải nghiệm và tâm sự"));
+//            topics.add(new Topic("Đầu tư tài chính"));
 //            topicService.createTopics(topics);
-
+//
 //            var admin = RegisterRequest.builder()
 //                    .firstname("duy")
 //                    .lastname("truong")
@@ -50,7 +50,7 @@ public class OnlineForumChatApplication {
 //                    .password("123456")
 //                    .username("duytruong")
 //                    .build();
-
+//
 //            var admin1 = RegisterRequest.builder()
 //                    .firstname("a")
 //                    .lastname("b")
@@ -58,8 +58,10 @@ public class OnlineForumChatApplication {
 //                    .password("123456")
 //                    .username("abc")
 //                    .build();
+//            service.register(admin);
+//            service.register(admin1);
 //            System.out.println("Admin token: " + service.register(admin1).getAccessToken());
-
+//
 //            var post1 = Post.builder()
 //                    .title("title1")
 //                    .content("content1")
@@ -67,7 +69,7 @@ public class OnlineForumChatApplication {
 //                    .user(userService.getUserByUsername("abc"))
 //                    .createdAt(LocalDateTime.now())
 //                    .build();
-
+//
 //            var post2 = Post.builder()
 //                    .title("title2")
 //                    .content("content2")
@@ -77,6 +79,6 @@ public class OnlineForumChatApplication {
 //                    .build();
 //            postService.createPost(post1);
 //            postService.createPost(post2);
-//        };
-//    }
+        };
+    }
 }

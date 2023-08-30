@@ -10,6 +10,8 @@ import com.n157.onlineforumchat.user.User;
 import com.n157.onlineforumchat.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,11 @@ public class DemoController {
 
     @GetMapping
     public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Hello from secured endpoint");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String userMail = authentication.getName();
+        String response = "Hello, " + userMail;
+        return ResponseEntity.ok(response);
     }
 //
 //    @GetMapping("topics/{topic_id}")

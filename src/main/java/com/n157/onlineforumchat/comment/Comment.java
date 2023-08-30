@@ -22,6 +22,7 @@ public class Comment {
     @GeneratedValue
     @Column(name = "comment_id")
     private Long id;
+    @Column(length = 10000)
     private String text;
     private LocalDateTime createdAt;
 

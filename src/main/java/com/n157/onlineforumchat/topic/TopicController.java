@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,10 @@ public class TopicController {
     public ResponseEntity<List<TopicDTO>> getAllTopics() {
         List<Topic> topics = topicService.getAllTopics();
         List<TopicDTO> topicDTOs = new ArrayList<>();
+
+        Comparator<Topic> idComparator = Comparator.comparingLong(Topic::getId);
+        topics.sort(idComparator);
+
         for (Topic topic : topics) {
             TopicDTO topicDTO = new TopicDTO();
             topicDTO.setId(topic.getId());
