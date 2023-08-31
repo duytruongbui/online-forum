@@ -113,6 +113,7 @@ public class AuthenticationService {
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();
+                response.setContentType("appication/json");
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
