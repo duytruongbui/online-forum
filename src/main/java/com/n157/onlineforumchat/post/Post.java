@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Builder
 @Data
@@ -27,7 +25,7 @@ public class Post {
     @Column(name = "post_content", length = 10000)
 
     private String content;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @JsonIgnore
     @ManyToOne

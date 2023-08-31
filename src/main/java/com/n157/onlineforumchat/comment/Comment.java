@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Builder
 @Data
@@ -24,7 +22,7 @@ public class Comment {
     private Long id;
     @Column(length = 10000)
     private String text;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
