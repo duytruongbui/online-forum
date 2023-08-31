@@ -1,21 +1,7 @@
 package com.n157.onlineforumchat;
 
-import com.n157.onlineforumchat.auth.AuthenticationService;
-import com.n157.onlineforumchat.auth.RegisterRequest;
-import com.n157.onlineforumchat.post.Post;
-import com.n157.onlineforumchat.post.PostService;
-import com.n157.onlineforumchat.topic.Topic;
-import com.n157.onlineforumchat.topic.TopicService;
-import com.n157.onlineforumchat.user.UserRepository;
-import com.n157.onlineforumchat.user.UserService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class OnlineForumChatApplication {
@@ -24,12 +10,12 @@ public class OnlineForumChatApplication {
         SpringApplication.run(OnlineForumChatApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner seedTopics(TopicService topicService,
-                                        AuthenticationService service,
-                                        PostService postService,
-                                        UserService userService) {
-        return args -> {
+//    @Bean
+//    public CommandLineRunner seedTopics(TopicService topicService,
+//                                        AuthenticationService service,
+//                                        PostService postService,
+//                                        UserService userService) {
+//        return args -> {
 //            List<Topic> topics = new ArrayList<>();
 //            topics.add(new Topic("Công nghệ"));
 //            topics.add(new Topic("Kinh doanh và khởi nghiệp"));
@@ -79,6 +65,6 @@ public class OnlineForumChatApplication {
 //                    .build();
 //            postService.createPost(post1);
 //            postService.createPost(post2);
-        };
-    }
+//        };
+//    }
 }

@@ -15,7 +15,7 @@ public class ChatGptController {
     @Value("${openai.model}")
     private String model;
 
-    @Value(("${openai.api.url}"))
+    @Value("${openai.api.url}")
     private String apiURL;
 
     @Autowired
@@ -29,8 +29,7 @@ public class ChatGptController {
         assert chatGptResponse != null;
 
         String responseContent = chatGptResponse.getChoices().get(0).getMessage().getContent();
-        BotChatResponse botResponse = new BotChatResponse(responseContent);
 
-        return botResponse;
+        return new BotChatResponse(responseContent);
     }
 }

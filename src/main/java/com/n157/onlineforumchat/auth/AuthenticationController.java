@@ -1,8 +1,6 @@
 package com.n157.onlineforumchat.auth;
 
 import com.n157.onlineforumchat.config.LogoutService;
-import com.n157.onlineforumchat.token.Token;
-import com.n157.onlineforumchat.token.TokenRepository;
 import com.n157.onlineforumchat.user.User;
 import com.n157.onlineforumchat.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,14 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,7 +24,6 @@ import java.util.Optional;
 public class AuthenticationController {
 
     private final AuthenticationService service;
-    private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final LogoutService logoutService;
 
@@ -72,6 +67,5 @@ public class AuthenticationController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
     }
-
 
 }

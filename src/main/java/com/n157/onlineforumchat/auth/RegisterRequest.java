@@ -1,6 +1,5 @@
 package com.n157.onlineforumchat.auth;
 
-import com.n157.onlineforumchat.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-  private String firstname;
-  private String lastname;
-  private String username;
-  private String email;
-  private String password;
+    private String firstname;
+    private String lastname;
+    private String username;
+    private String email;
+    private String password;
 }
