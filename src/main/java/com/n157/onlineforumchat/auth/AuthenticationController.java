@@ -27,7 +27,7 @@ public class AuthenticationController {
     private final UserRepository userRepository;
     private final LogoutService logoutService;
 
-    @PostMapping("/register") /* POST /register: Register a new user.*/
+    @PostMapping("/register")  /* POST /register: Register the user.*/
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request) {
         try {
@@ -45,7 +45,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/login") /* POST /login: User login.*/
+    @PostMapping("/login")  /* POST /login: Login the user.*/
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody AuthenticationRequest request) {
         try {
@@ -56,16 +56,18 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/logout") /* POST /logout: User logout.*/
+    @PostMapping("/logout") /* POST /logout: Logout the user.*/
     public ResponseEntity<String> logout(
             HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         logoutService.logout(request, response, authentication);
         return ResponseEntity.ok("Logged out successfully");
     }
 
-    @PostMapping("/refresh-token")
+    @PostMapping("/refresh-token") /* POST /refresh-token: Refresh the JWT token.*/
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
     }
+
+
 
 }
