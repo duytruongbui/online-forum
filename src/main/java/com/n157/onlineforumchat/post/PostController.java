@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,11 @@ public class PostController {
 
     @PostMapping("/add-post") /* POST /: Create a new post (for authorized users).*/
     public ResponseEntity<String> createPost(@RequestBody PostResponse postResponse) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        String formattedDateTime = dateTime.format(formatter);
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -73,7 +79,7 @@ public class PostController {
         Post post = Post.builder()
                 .title(postResponse.getTitle())
                 .content(postResponse.getContent())
-                .createdAt(LocalDateTime.now())
+                .createdAt(formattedDateTime)
                 .user(user)
                 .topic(topicService.getTopicByName(postResponse.getTopicName()))
                 .build();

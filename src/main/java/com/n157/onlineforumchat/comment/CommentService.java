@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,16 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     public void save(CommentDTO commentDTO) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        String formattedDateTime = dateTime.format(formatter);
         Post post = postRepository.findById(commentDTO.getPostId())
                 .orElseThrow(() -> new PostNotFoundException(commentDTO.getPostId().toString()));
 
         Comment comment = Comment.builder()
                 .text(commentDTO.getText())
-                .createdAt(LocalDateTime.now())
+                .createdAt(formattedDateTime)
                 .post(post)
                 .user(authenticationService.getCurrentUser())
                 .build();
