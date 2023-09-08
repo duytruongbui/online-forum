@@ -126,7 +126,7 @@ public class PostController {
         return ResponseEntity.ok("Post updated successfully");
     }
 
-    @GetMapping("post/{postId}/related") // GET /:post_id/related: Get a list of related posts.
+    @GetMapping("post/related/{postId}") // GET /:post_id/related: Get a list of related posts.
     public ResponseEntity<List<Post>> getRelatedPosts(@PathVariable Long postId) {
         List<Post> relatedPosts = postService.getRelatedPosts(postId);
 
