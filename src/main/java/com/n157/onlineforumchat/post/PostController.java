@@ -126,6 +126,17 @@ public class PostController {
         return ResponseEntity.ok("Post updated successfully");
     }
 
+    @GetMapping("post/{postId}/related") // GET /:post_id/related: Get a list of related posts.
+    public ResponseEntity<List<Post>> getRelatedPosts(@PathVariable Long postId) {
+        List<Post> relatedPosts = postService.getRelatedPosts(postId);
+
+        if (relatedPosts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(relatedPosts);
+        }
+    }
+
 
     /* DELETE /:post_id: Delete a post (for authorized users).*/
 }
